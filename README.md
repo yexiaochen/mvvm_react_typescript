@@ -6,7 +6,7 @@
 
 <center>
 
-![MVVM](../images/mvvm_typescript_React.gif)
+![MVVM](http://www.yexiaochen.com/images/mvvm_typescript_React.gif)
 
 </center>
 
