@@ -4,11 +4,7 @@
 
 所有代码可见[github](https://github.com/yexiaochen/mvvm_react_typescript)
 
-<center>
-
 ![MVVM](http://www.yexiaochen.com/images/mvvm_typescript_React.gif)
-
-</center>
 
 ```JavaScript
 // Mvvm.tsx
