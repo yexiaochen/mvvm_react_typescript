@@ -1,45 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+在写 [关于MVC模式简单代码实现](http://www.yexiaochen.com/%E5%85%B3%E4%BA%8EMVC%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/) 的过程中，觉得最麻烦的就是操作 DOM。所以这次换升级了，打算用 React。用过 React 的同学都知道，React 在更新视图时，必须要通过 `setState` 方式改变状态，这一过程是需要我们主动调用的。而 Vue 是通过对 `data` 下的变量赋值直接更新了视图，Vue 之所以这么简单，是因为采用了数据劫持的方式。所以，这次的目的就是在 React 的基础上实现和 Vue 类似的效果。
 
-## Available Scripts
+实现思路就是利用高阶组件里的反向继承对包裹组件的 `state` 劫持。这是一个练手的小项目，没考虑那么多。为什么这么闲呢，那是因为之前写了 [用Type驯化JavaScript](http://www.yexiaochen.com/%E7%94%A8Type%E9%A9%AF%E5%8C%96JavaScript/) 这篇文章，所以就捣鼓出这么一个玩意。
 
-In the project directory, you can run:
+所有代码可见[github](https://github.com/yexiaochen/mvvm_react_typescript)
 
-### `npm start`
+<center>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![MVVM](../images/mvvm_typescript_React.gif)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+</center>
 
-### `npm test`
+```JavaScript
+// Mvvm.tsx
+const hocExtends = (WrapperComponent: ComponentClass) => (
+  class extends WrapperComponent {
+    constructor(props: any) {
+      super(props);
+    }
+    render() {
+      let self = this;
+      this.state = new Proxy({ ...this.state }, {
+        get: function (target, key, receiver) {
+          return Reflect.get(target, key, receiver);
+        },
+        set: function (target, key, value, receiver): any {
+          self.setState({
+            [key]: value
+          })
+          return Reflect.set(target, key, value, receiver);
+        }
+      })
+      return super.render()
+    }
+  }
+)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# mvvm_react_typescript
+......
+filterSearchStuff(searchStuff: string): void {
+    const { stuffData } = this.state;
+    let stuffItem: IStuff = stuffData.find((item: IStuff) => item.stuff === searchStuff)
+    this.state.stuffItem = stuffItem;
+    // this.setState({
+    //   stuffItem
+    // })
+  }
+......
+```
