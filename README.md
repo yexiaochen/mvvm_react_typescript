@@ -2,8 +2,6 @@
 
 实现思路就是利用高阶组件里的反向继承对包裹组件的 `state` 劫持。这是一个练手的小项目，没考虑那么多。为什么这么闲呢，那是因为之前写了 [用Type驯化JavaScript](http://www.yexiaochen.com/%E7%94%A8Type%E9%A9%AF%E5%8C%96JavaScript/) 这篇文章，所以就捣鼓出这么一个玩意。
 
-所有代码可见[github](https://github.com/yexiaochen/mvvm_react_typescript)
-
 ```JavaScript
 // Mvvm.tsx
 const hocExtends = (WrapperComponent: ComponentClass) => (
