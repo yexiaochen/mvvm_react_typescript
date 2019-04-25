@@ -1,0 +1,50 @@
+fieldset{
+  border-radius: 10px;
+}
+.Mvvm{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  cursor: default;
+}
+.Search{
+  min-width: 300px;
+  text-align: center;
+}
+.searchInput{
+  outline: none;
+  border: none;
+  text-align: center;
+}
+.StuffTable{}
+.StuffTable table {
+  text-align: center;
+  min-width: 300px;
+}
+.StuffTable table td {
+  padding: 5px;
+}
+.ModifyStuff{
+  min-width: 300px;
+  text-align: center;
+}
+.ModifyStuff fieldset {
+  padding: 0;
+}
+.ModifyStuff table {
+  text-align: center;
+  min-width: 300px;
+}
+.ModifyStuff table td {
+  padding: 5px;
+}
+.ModifyStuffInput{
+  text-align: center;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid #ccc;
+  height: 20px;
+}
